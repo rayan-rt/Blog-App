@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <%- include("./partials/header.ejs") %>
+
+        <title>Blogify | <%= title %></title>
+    </head>
+
+    <body>
+        <%- include("./partials/nav.ejs") %>
+
+
+        <div class="p-5">
+            <form action="/user/signup" method="post">
+                <div class="mb-3">
+                    <label for="exampleInputFullName" class="form-label">Full Name</label>
+                    <input name="fullName" type="text" class="form-control" id="exampleInputFullName"
+                        aria-describedby="emailHelp">
+
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input name="email" type="email" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp">
+
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="/signin" class="nav-link active text-warning" aria-current="page">Already have an
+                        account</a>
+                </li>
+            </ul>
+        </div>
+
+        <%- include("./partials/footer.ejs") %>
+    </body>
+
+</html>

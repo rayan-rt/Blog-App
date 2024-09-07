@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <%- include("./partials/header.ejs") %>
+
+        <title>Blogify | <%= title %></title>
+    </head>
+
+    <body>
+        <%- include("./partials/nav.ejs") %>
+        <% if (locals.blog) { %>
+        <div class="card w-100">
+            <div class="d-flex gap-2 align-items-center justify-content-center w-100">
+                <img src="<%= blog.createdBy.profileImageURL %>" alt="<%= blog.createdBy.fullName %>"
+                    style="width: 60px; height: 60px;" class="rounded-circle object-fit-contain">
+                <p style="font-weight: 500; font-size: large;"><%= blog.createdBy.fullName %></p>
+            </div>
+            <img src="/uploads/<%= blog.coverImageURL %>" class="card-img-top w-75 mx-auto" alt="<%= blog.title %>">
+            <div class="card-body w-75 mx-auto">
+                <h5 class="card-title w-100"><%= blog.title %></h5>
+                <pre class="card-text w-100"><%= blog.body %></pre>
+
+                <% if (blog.createdBy._id.toString() === locals.user?._id) { %>
+                <div class="d-flex gap-4 align-items-center justify-content-center w-100">
+                    <a href="/update/<%= blog._id %>" class="btn btn-secondary">Update</a>
+                    <a href="/blog/delete/<%= blog._id %>" class="btn btn-danger">Delete</a>
+                </div>
+                <% } %>
+            </div>
+
+            <% if (locals.user) { %>
+            <form action="/blog/<%= blog._id %>/comment" method="post" class="w-50 mx-auto">
+                <div class="mb-5 mt-3">
+                    <input type="text" name="content" class="form-control" placeholder="comment...">
+                </div>
+            </form>
+
+            <div class="my-3 p-2 w-50 mx-auto rounded">
+                <% if (locals.comments) { %>
+                <% comments.forEach(comment => { %>
+                <div class="d-flex gap-2 align-items-center justify-content-start w-50">
+                    <img src="<%= comment.createdBy.profileImageURL %>" alt="comment" style="width: 40px; height: 40px;"
+                        class="rounded-circle object-fit-contain">
+                    <%= comment.createdBy.fullName %>
+                </div>
+                <p><%= comment.content %></p>
+                <% }) %>
+                <% } %>
+            </div>
+            <% } %>
+        </div>
+        <% }  %>
+
+        <%- include("./partials/footer.ejs") %>
+    </body>
+
+</html>

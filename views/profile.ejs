@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <%- include("./partials/header.ejs") %>
+
+        <title>Blogify | <%= title %></title>
+    </head>
+
+    <body>
+        <%- include("./partials/nav.ejs") %>
+        <div class="w-100 card px-2 py-4" style="background-color: antiquewhite;">
+            <div class="d-flex align-items-center justify-content-start position-relative"
+                style="width: 10rem; height: 10rem;">
+                <img src="<%= locals.user.profileImageURL %>" class="card-img-top rounded-circle object-fit-contain"
+                    alt="<%= locals.user.fullName %>" style="width: 10rem; height: 10rem;">
+
+
+                <i id="select_img" class="rounded-circle d-flex justify-content-center align-items-center"
+                    style="background-color: azure; position: absolute; bottom: -5px; right: 30px; width: 2rem; height: 2rem; cursor: pointer;">✏</i>
+
+                <form id="profileIMGForm" action="/user/upload_profile" method="post" enctype="multipart/form-data"
+                    hidden>
+                    <input name="image" type="file">
+                </form>
+
+            </div>
+            <h3 class="card-title my-2 mx-3"><%= locals.user.userName %></h3>
+        </div>
+
+        <div class="container row row-cols-2 px-4 py-2 gap-4">
+            <% if (locals.blogs.length > 0) { %>
+            <% blogs.forEach(blog => { %>
+            <div class="card col col-lg-4" style="width: 18rem;">
+                <img src="../uploads/<%= blog.coverImageURL %>" class="card-img-top" alt="<%= blog.title %>">
+                <div class="card-body">
+                    <p class="card-title"><%= blog.title %></p>
+                    <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
+                </div>
+            </div>
+            <% }) %>
+            <% } else { %>
+            <p>No Blog Yet!</p>
+            <% } %>
+        </div>
+
+
+        <script>
+            document.querySelector("#select_img").addEventListener("click", () => document.querySelector("#profileIMGForm input").click());
+
+            document.querySelector("#profileIMGForm input").addEventListener("change", () => document.querySelector("#profileIMGForm").submit());
+        </script>
+
+        <%- include("./partials/footer.ejs") %>
+    </body>
+
+</html>
